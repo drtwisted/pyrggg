@@ -22,7 +22,7 @@ class Roller(QThread):
             # sleep
             const_percent = (list_len / 100) * 63.5
             modifier = abs(tan(i / const_percent))
-            sleep(0.01 * modifier)
+            sleep(0.005 * modifier)
 
             res_list = list()
             for j in range(labels_count - 1):
