@@ -4,6 +4,9 @@ from PyQt4.QtCore import QThread, SIGNAL
 from time import sleep
 
 
+ACTION_ROLL = 'roll'
+ACTION_HIGHLIGHT = 'highlight'
+
 class FiveList(list):
     _size_limiter = 5
 
@@ -43,7 +46,7 @@ class Roller(QThread):
     def __send_update_signal(self, _list):
         self.emit(SIGNAL('update(PyQt_PyObject)'), _list)
 
-    def run(self):
+    def roll(self):
         base_sleep_time = 0.005
         _list = self._list
         labels_count = len(self._labels)
@@ -67,15 +70,24 @@ class Roller(QThread):
         # print('random_value: {0}'.format(random_value))
 
         if random_value > (random_factor / 2):
-            devider = 50
+            divider = 50
             prev_list_len = len(self.__previous_list)
             random_diff = random_factor - random_value
-            range_margin = int(random_diff / devider)
+            range_margin = int(random_diff / divider)
             range_margin = (range_margin
                             if range_margin <= prev_list_len
                             else prev_list_len)
             for i in range(1, range_margin):
-                sleep(base_sleep_time * devider)
+                sleep(base_sleep_time * divider)
                 res_list = self.__update_lables(
                         self.__previous_list[prev_list_len - i], forward=False)
                 self.__send_update_signal(res_list)
+
+    def highlight(self):
+        pass
+
+    def run(self, action=ACTION_ROLL):
+        if action == ACTION_ROLL:
+            self.roll()
+        elif action == ACTION_HIGHLIGHT:
+            self.highlight()
