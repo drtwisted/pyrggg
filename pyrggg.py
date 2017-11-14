@@ -14,6 +14,7 @@ EP_URL_TEMPLATE = (
     "http://www.emuparadise.me/roms/search.php?query={0}&section=all")
 
 
+# Main Window Class
 class PyRGGG(QtGui.QMainWindow):
     def __init__(self, parent=None, app=None):
         QtGui.QWidget.__init__(self, parent)
@@ -30,7 +31,7 @@ class PyRGGG(QtGui.QMainWindow):
         self.ui = Ui_PyRGGGWindow()
         self.ui.setupUi(self)
 
-        # Signal connections
+	# Signals connections
         self.ui.bRoll.clicked.connect(self.do_roll)
 
         self.labels = [self.ui.lbFirstGame,
